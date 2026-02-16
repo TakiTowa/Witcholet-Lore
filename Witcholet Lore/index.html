@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Witcholet | Universo</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="logo-container">
+                <div class="logo">TEAM WITCHOLET</div>
+                <ul class="dropdown-menu">
+                    <li><a href="witcholet pagina">CONTACTO</a></li>
+                    <li><a href="witcholet pagina">JUEGOS</a></li>
+                    <li><a href="witcholet pagina">REDES SOCIALES</a></li>
+                </ul>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="witcholet pagina">INICIO</a></li>
+                <li><a href="witcholet pagina">PERSONAJES</a></li>
+                <li><a href="witcholet pagina">ZONAS</a></li>
+                <li><a href="witcholet pagina">COMICS</a></li>
+                <li><a href="witcholet pagina">UNIVERSOS ALTERNOS</a></li>
+                <li><a href="witcholet pagina">MAPA</a></li>
+                <li><a href="witcholet pagina">EXPLORAR</a></li>
+            </ul>
+            <div class="nav-actions">
+                <span class="search-icon">🔍 BUSCAR</span>
+                <span class="lang-icon">🌐</span>
+                <a href="witcholet pagina" class="login">INICIAR SESIÓN</a>
+                <button class="btn-play" onclick="location.href='witcholet pagina'">JUGAR AHORA</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="hero-section">
+        <div class="carousel-container">
+            <div class="carousel-side side-left">
+                <img id="side-l-img" src="" alt="Anterior">
+                <div class="side-text" id="side-l-text">TEXTO</div>
+            </div>
+
+            <div class="carousel-main">
+                <div class="main-image-wrapper">
+                    <img id="main-img" src="" alt="Actual">
+                    <div class="info-card">
+                        <p id="char-subtitle" class="subtitle"></p>
+                        <h1 id="char-name" class="character-name"></h1>
+                    </div>
+                </div>
+                <div class="nav-arrow left" onclick="changeSlide(-1)">〈</div>
+                <div class="nav-arrow right" onclick="changeSlide(1)">〉</div>
+            </div>
+
+            <div class="carousel-side side-right">
+                <img id="side-r-img" src="" alt="Siguiente">
+                <div class="side-text" id="side-r-text">TEXTO</div>
+            </div>
+        </div>
+
+        <div class="footer-label">
+            <span>MÁS RECIENTE</span>
+        </div>
+    </main>
+
+    <script>
+        const slides = [
+            { img: "Silk.jpg", name: "UNIVERSO", sub: "LA EMPERATRIZ DE SEDA" },
+            { img: "Background.png", name: "ELIZABETH", sub: "LA DRAGONA" },
+            { img: "PIXEL.png", name: "ORIGINAL", sub: "PRIMER JUEGO DE WITCHOLET" }
+        ];
+        
+        let currentIdx = 0;
+
+        function updateCarousel() {
+            // Calcular índices vecinos
+            const leftIdx = (currentIdx - 1 + slides.length) % slides.length;
+            const rightIdx = (currentIdx + 1) % slides.length;
+
+            // Elementos
+            const mainImg = document.getElementById('main-img');
+            const sideLImg = document.getElementById('side-l-img');
+            const sideRImg = document.getElementById('side-r-img');
+
+            // Efecto de salida (fade)
+            document.querySelectorAll('.carousel-container img, .info-card, .side-text').forEach(el => {
+                el.style.opacity = '0';
+            });
+
+            setTimeout(() => {
+                // Actualizar Centro
+                mainImg.src = slides[currentIdx].img;
+                document.getElementById('char-name').innerText = slides[currentIdx].name;
+                document.getElementById('char-subtitle').innerText = slides[currentIdx].sub;
+
+                // Actualizar Izquierda
+                sideLImg.src = slides[leftIdx].img;
+                document.getElementById('side-l-text').innerText = slides[leftIdx].name;
+
+                // Actualizar Derecha
+                sideRImg.src = slides[rightIdx].img;
+                document.getElementById('side-r-text').innerText = slides[rightIdx].name;
+
+                // Efecto de entrada
+                document.querySelectorAll('.carousel-container img, .info-card, .side-text').forEach(el => {
+                    el.style.opacity = '1';
+                });
+            }, 300);
+        }
+
+        function changeSlide(direction) {
+            currentIdx = (currentIdx + direction + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        // Carga inicial
+        window.onload = updateCarousel;
+    </script>
+</body>
+</html>
