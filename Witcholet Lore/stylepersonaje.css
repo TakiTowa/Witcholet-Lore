@@ -1,0 +1,73 @@
+/* --- BANNER DE PERSONAJE --- */
+.character-hero {
+    position: relative;
+    height: 85vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-bg img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.hero-name {
+    font-family: 'MiFuentePersonalizada', serif;
+    font-size: 90px;
+    letter-spacing: 12px;
+    color: var(--gold);
+}
+
+/* --- SUB-NAV STICKY (LÍNEA DE PROGRESO) --- */
+.sub-nav-sticky {
+    background: rgba(5, 5, 5, 0.95);
+    border-top: 1px solid var(--gold-dark);
+    border-bottom: 1px solid var(--gold-dark);
+    position: sticky;
+    top: 70px; /* Ajustado debajo del header principal */
+    z-index: 90;
+    padding: 15px 0;
+}
+
+.progress-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.line-bg {
+    position: absolute;
+    width: 100%; height: 1px;
+    background: #333;
+    z-index: 1;
+}
+
+.diamond {
+    width: 8px; height: 8px;
+    background: #000;
+    border: 1px solid var(--gold);
+    transform: rotate(45deg);
+    z-index: 2;
+    transition: 0.3s;
+}
+
+.progress-links a:hover .diamond {
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+}
+
+/* --- SECCIONES DE RELATOS --- */
+.story-banner {
+    position: relative;
+    height: 450px;
+    border: 1px solid #222;
+    overflow: hidden;
+    margin-bottom: 80px;
+}
+
+.progress-links { display: flex; justify-content: space-around; align-items: center; }
