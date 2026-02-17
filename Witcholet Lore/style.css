@@ -27,6 +27,90 @@ body {
     overflow-x: hidden;
 }
 
+
+/* --- SUBMENÚS DESPLEGABLES --- */
+
+/* Elemento que contiene un submenú */
+.has-submenu {
+    position: relative;
+}
+
+/* El símbolo de la flecha */
+.has-submenu a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.has-submenu a span {
+    font-size: 8px;
+    margin-left: 10px;
+}
+
+/* Configuración del Menú Nivel 2 (Oculto por defecto) */
+.submenu-inner {
+    position: absolute;
+    top: -1px;       /* Alineado con el item padre */
+    left: 100%;      /* Aparece a la derecha del menú Nivel 1 */
+    background: var(--bg-card);
+    border: 1px solid var(--gold-dark);
+    list-style: none;
+    min-width: 180px;
+    display: none;   /* Oculto */
+    padding: 10px 0;
+    z-index: 1001;
+}
+
+/* Mostrar Menú Nivel 2 al pasar el cursor por el LI padre */
+.has-submenu:hover > .submenu-inner {
+    display: block;
+}
+
+/* Estilo para los enlaces de los submenús */
+.submenu-inner li a {
+    padding: 10px 20px;
+    font-size: 10px;
+    color: var(--text-white);
+    text-decoration: none;
+    display: block;
+    transition: 0.3s;
+}
+
+.submenu-inner li a:hover {
+    color: var(--gold);
+    background: rgba(200, 170, 110, 0.1);
+}
+
+/* Ajuste para que el menú no se corte en los bordes de la pantalla */
+.dropdown-menu {
+    overflow: visible; /* Importante para que los submenús salgan del contenedor */
+}
+/* --- ESTILOS DEL LOGO PNG --- */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.main-logo-img {
+    height: 75px; /* Ajusta esta altura según tu diseño */
+    width: auto;  /* Mantiene la proporción original del PNG */
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(200, 170, 110, 0.2)); /* Brillo sutil dorado */
+}
+
+.main-logo-img:hover {
+    transform: scale(1.05); /* Efecto de crecimiento al pasar el mouse */
+    filter: drop-shadow(0 0 10px var(--gold)); /* Resalta el brillo al hacer hover */
+}
+
+/* Aseguramos que el logo-container no limite el espacio del PNG */
+.logo-container {
+    display: flex;
+    align-items: center;
+    min-width: 150px;
+}
+
 /* --- HEADER --- */
 .main-header {
     background: rgba(0, 0, 0, 0.9);
@@ -63,7 +147,7 @@ body {
 
 .btn-play { background: #006680; color: white; border: none; padding: 8px 20px; font-weight: bold; cursor: pointer; border-radius: 2px; }
 
-/* --- CARRUSEL --- */
+/*CARRUSEL*/
 .hero-section { padding-top: 120px; height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .carousel-container { display: flex; align-items: center; width: 100%; max-width: 1600px; height: 60vh; padding: 0 50px; gap: 30px; }
 .carousel-main { flex: 3; position: relative; border: 1px solid #c8aa6e44; height: 100%; }
@@ -86,7 +170,7 @@ img, .info-card, .side-text { transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 .nav-arrow.left { left: 10px; }
 .nav-arrow.right { right: 10px; }
 
-/* --- SECCIÓN MÁS RECIENTE --- */
+/*SECCIÓN MÁS RECIENTE*/
 .latest-section { max-width: 1400px; margin: 100px auto; padding: 0 40px; }
 .section-divider { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 50px; }
 .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dark), transparent); }

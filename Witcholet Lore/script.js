@@ -57,6 +57,20 @@ function renderLatestArticles() {
     `).join('');
 }
 
+function openFull(src) {
+    // Crea un modal básico para mostrar la imagen
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed; top:0; left:0; width:100%; height:100%;
+        background: rgba(0,0,0,0.9); z-index:1000;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+    `;
+    modal.innerHTML = `<img src="${src}" style="max-width: 90%; max-height: 90%; border: 2px solid var(--gold);">`;
+    modal.onclick = () => modal.remove();
+    document.body.appendChild(modal);
+}
+
 function jumpToSlide(name) {
     const index = slides.findIndex(s => s.name === name);
     if (index !== -1) {
