@@ -1,0 +1,60 @@
+/* Contenedor principal */
+.latest-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    background-color: rgba(0, 0, 0, 0); /* Fondo oscuro acorde a la imagen */
+}
+
+.wip-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Título */
+.wip-title {
+    font-family: 'Cinzel', serif;
+    color: #d4af37; /* Color dorado */
+    font-size: 2.5rem;
+    letter-spacing: 5px;
+    margin-bottom: 30px;
+}
+
+/* Contenedor de imágenes para apilarlas */
+.wip-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espacio entre la chica y el logo */
+}
+
+/* Imagen de la trabajadora */
+.wip-character {
+    max-width: 300px; /* Ajusta según prefieras el tamaño */
+    height: auto;
+    display: block;
+}
+
+/* Logo de la empresa */
+.wip-logo {
+    max-width: 200px; /* Logo un poco más pequeño que el personaje */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.wip-logo:hover {
+    transform: scale(1.05);
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .wip-title {
+        font-size: 1.8rem;
+    }
+    .wip-character {
+        max-width: 200px;
+    }
+}

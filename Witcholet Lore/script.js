@@ -1,9 +1,9 @@
 const slides = [
-    { img: "Silk.jpg", name: "UNIVERSO", sub: "LA EMPERATRIZ DE SEDA" },
-    { img: "Background.png", name: "CUEVAS", sub: "PROFUNDIDADES OSCURAS" },
-    { img: "Silk.jpg", name: "COLISEO", sub: "ARENA SUBTERRÁNEA" },
-    { img: "Background.png", name: "CASTILLO", sub: "EL TRONO DE SEDA" },
-    { img: "PIXEL.png", name: "ORIGINAL", sub: "PRIMER JUEGO DE WITCHOLET" }
+    { img: "Silk.jpg", name: "UNIVERSO", sub: "LA EMPERATRIZ DE SEDA", url: "Workinprogress.html"},
+    { img: "Background.png", name: "CUEVAS", sub: "PROFUNDIDADES OSCURAS", url: "Workinprogress.html" },
+    { img: "Silk.jpg", name: "COLISEO", sub: "ARENA SUBTERRÁNEA", url: "Workinprogress.html" },
+    { img: "Background.png", name: "CASTILLO", sub: "EL TRONO DE SEDA", url: "Workinprogress.html" },
+    { img: "PIXEL.png", name: "ORIGINAL", sub: "PRIMER JUEGO DE WITCHOLET", url: "Workinprogress.html" }
 ];
 
 let currentIdx = 0;
@@ -12,49 +12,69 @@ function updateCarousel() {
     const leftIdx = (currentIdx - 1 + slides.length) % slides.length;
     const rightIdx = (currentIdx + 1) % slides.length;
 
+    const mainImg = document.getElementById('main-img');
     const elements = [
-        document.getElementById('main-img'),
-        document.getElementById('side-l-img'),
-        document.getElementById('side-r-img'),
-        document.querySelector('.info-card'),
-        document.getElementById('side-l-text'),
-        document.getElementById('side-r-text')
+        mainImg, 
+        document.getElementById('side-l-img'), 
+        document.getElementById('side-r-img'), 
+        document.querySelector('.info-card')
     ];
 
+    // Efecto de transición (desvanecimiento)
     elements.forEach(el => { if(el) el.style.opacity = "0"; });
 
     setTimeout(() => {
-        // Centro
-        document.getElementById('main-img').src = slides[currentIdx].img;
-        document.getElementById('char-name').innerText = slides[currentIdx].name;
-        document.getElementById('char-subtitle').innerText = slides[currentIdx].sub;
+        const currentSlide = slides[currentIdx];
 
-        // Izquierda
+        // Actualización de contenidos del centro
+        mainImg.src = currentSlide.img;
+        document.getElementById('char-name').innerText = currentSlide.name;
+        document.getElementById('char-subtitle').innerText = currentSlide.sub;
+
+        // ACTUALIZACIÓN DEL LINK: Redirige al artículo después de cliquear la caja
+        const charLink = document.getElementById('char-link');
+        if (charLink) {
+            charLink.href = currentSlide.url;
+        }
+
+        // Actualización de laterales
         document.getElementById('side-l-img').src = slides[leftIdx].img;
         document.getElementById('side-l-text').innerText = slides[leftIdx].name;
-
-        // Derecha
         document.getElementById('side-r-img').src = slides[rightIdx].img;
         document.getElementById('side-r-text').innerText = slides[rightIdx].name;
+
+        // Sistema de persistencia: guarda el artículo visitado en el historial
+        guardarEnHistorial(currentSlide);
 
         elements.forEach(el => { if(el) el.style.opacity = "1"; });
     }, 300);
 }
-
 function renderLatestArticles() {
     const grid = document.getElementById('latest-grid');
-    // Toma los últimos 5 del array (puedes añadir más a 'slides' y siempre tomará los 5 primeros de esta lista)
+    if (!grid) return;
+
+    // Tomamos los 5 artículos más recientes del arreglo 'slides'
+    // .slice(0, 5) asegura que siempre se muestren solo los últimos cinco
     const latestItems = slides.slice(0, 5);
 
     grid.innerHTML = latestItems.map(item => `
-        <div class="latest-card" onclick="jumpToSlide('${item.name}')">
+        <div class="latest-card" onclick="accederArticulo('${item.url}', '${item.name}')">
             <img src="${item.img}" alt="${item.name}">
-            <div class="card-info-bottom">
+            <div class="card-info-bottom">                
                 <span class="sub">${item.sub}</span>
                 <span class="title">${item.name}</span>
             </div>
         </div>
     `).join('');
+}
+
+// Nueva función para manejar el acceso directo y guardar el historial
+function accederArticulo(url, nombre) {
+    // Registramos la visita en el historial antes de navegar
+    guardarEnHistorial({ name: nombre, url: url });
+    
+    // Redirección directa a la página del artículo
+    window.location.href = url;
 }
 
 function openFull(src) {
@@ -83,6 +103,24 @@ function jumpToSlide(name) {
 function changeSlide(direction) {
     currentIdx = (currentIdx + direction + slides.length) % slides.length;
     updateCarousel();
+}
+
+function guardarEnHistorial(articulo) {
+    let historial = JSON.parse(localStorage.getItem('witcholet_history')) || [];
+    
+    // Evita duplicados consecutivos
+    if (historial.length === 0 || historial[0].name !== articulo.name) {
+        historial.unshift({
+            name: articulo.name,
+            url: articulo.url,
+            fecha: new Date().toISOString()
+        });
+    }
+
+    // Mantiene solo los últimos 10 elementos para optimizar el almacenamiento
+    if (historial.length > 10) historial.pop();
+    
+    localStorage.setItem('witcholet_history', JSON.stringify(historial));
 }
 
 window.onload = () => {
